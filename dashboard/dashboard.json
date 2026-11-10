@@ -1,15 +1,15 @@
 {
   "title": "3DCP print dashboard",
-  "board": "P3",
-  "arch": "P4",
-  "default": "P6",
-  "doi": "TODO_BEFORE_RELEASE",
+  "board": "print3",
+  "arch": "print4",
+  "default": "print6",
+  "doi": "10.5281/zenodo.24117435",
   "prints": {
-    "P1": {"title": "Wall, December 2023", "mortar": "A"},
-    "P2": {"title": "Board, December 2024", "mortar": "A"},
-    "P3": {"title": "Water step test", "mortar": "A"},
-    "P4": {"title": "Arch, May 2025 (1)", "mortar": "A"},
-    "P5": {"title": "Width control", "mortar": "B"},
-    "P6": {"title": "Arch, May 2025 (2)", "mortar": "B"}
+    "print1": {"title": "Wall, December 2023", "mortar": "A"},
+    "print2": {"title": "Board, December 2024", "mortar": "A"},
+    "print3": {"title": "Water step test", "mortar": "A"},
+    "print4": {"title": "Arch, May 2025 (1)", "mortar": "A"},
+    "print5": {"title": "Width control", "mortar": "B"},
+    "print6": {"title": "Arch, May 2025 (2)", "mortar": "B"}
   }
 }

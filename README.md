@@ -18,11 +18,11 @@ py -3.11 -m venv venv
 venv\Scripts\pip install -r requirements.txt
 ```
 
-Download the published dataset (DOI: TODO_BEFORE_RELEASE) and unpack it into a
+Download the published dataset ([doi:10.5281/zenodo.24117435](https://doi.org/10.5281/zenodo.24117435)) into a
 folder, or let `fetch_dataset.py` do it with an md5 check of every file:
 
 ```powershell
-venv\Scripts\python fetch_dataset.py TODO_BEFORE_RELEASE dataset
+venv\Scripts\python fetch_dataset.py 10.5281/zenodo.24117435 dataset
 ```
 
 The dashboard lists the prints it finds in that folder: up to six as buttons in
@@ -97,7 +97,7 @@ venv\Scripts\python analysis\replay_video.py <experiment id> --seconds 40
 
 ## Citing
 
-See [CITATION.cff](CITATION.cff). Dataset: TODO_BEFORE_RELEASE.
+See [CITATION.cff](CITATION.cff). Dataset: [doi:10.5281/zenodo.24117435](https://doi.org/10.5281/zenodo.24117435).
 The width control results are from doi:10.58286/31704.
 
 ## Licence
