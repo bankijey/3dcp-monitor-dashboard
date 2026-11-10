@@ -1,0 +1,13 @@
+numpy>=1.24
+pandas>=2.2
+pyarrow>=15
+duckdb>=1.1          # ASOF JOIN, COMMENT ON, hive partition typing
+pytz>=2024.1         # duckdb needs it to return TIMESTAMPTZ values to Python
+scipy>=1.11          # layer search, filters
+fastapi>=0.110
+uvicorn>=0.27
+python-multipart>=0.0.9  # dashboard: pump CSV uploads
+plotly>=5.20
+matplotlib>=3.8      # replay video
+imageio-ffmpeg>=0.5  # replay video: bundled ffmpeg
+openpyxl>=3.1        # lab sheets (.xlsx) for --lab-dir

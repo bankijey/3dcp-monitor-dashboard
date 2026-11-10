@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "printmon"
+version = "0.1.0"
+description = "Acquisition fan-out, live monitoring and storage for the BAM 3D concrete printer"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.25",
+    "websockets>=11,<13",
+    "pyarrow>=17",  # <17 bundles an old msvcp140.dll that crashes Qt 6 when imported first
+]
+
+[project.optional-dependencies]
+viewer = ["PySide6>=6.6", "pyqtgraph>=0.13.7", "PyOpenGL>=3.1.7"]
+# Hardware side (inputs_fast.py / scan_fast.py). pyllt ships with the scanCONTROL SDK.
+acquisition = ["opcua>=0.98", "scipy>=1.10"]
+dev = ["pytest>=8", "ruff>=0.6", "duckdb>=1.1"]
+
+[project.scripts]
+printmon = "printmon.__main__:main"
+
+[tool.setuptools]
+packages = ["printmon"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+markers = ["gui: needs a Qt platform (runs headless with QT_QPA_PLATFORM=offscreen)"]
+filterwarnings = ["ignore::DeprecationWarning:websockets.*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# Legacy lab scripts are kept byte-for-byte until they are retired.
+extend-exclude = ["venv", "data", "lake", "inputs.py", "outputs.py", "scan.py",
+                  "width_control.py", "probe_*.py", "sweep_idle.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N"]
+ignore = ["UP031", "UP032"]  # str.format is the house style of the existing code

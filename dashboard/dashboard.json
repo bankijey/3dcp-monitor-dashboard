@@ -1,0 +1,15 @@
+{
+  "title": "3DCP print dashboard",
+  "board": "P3",
+  "arch": "P4",
+  "default": "P6",
+  "doi": "TODO_BEFORE_RELEASE",
+  "prints": {
+    "P1": {"title": "Wall, December 2023", "mortar": "A"},
+    "P2": {"title": "Board, December 2024", "mortar": "A"},
+    "P3": {"title": "Water step test", "mortar": "A"},
+    "P4": {"title": "Arch, May 2025 (1)", "mortar": "A"},
+    "P5": {"title": "Width control", "mortar": "B"},
+    "P6": {"title": "Arch, May 2025 (2)", "mortar": "B"}
+  }
+}

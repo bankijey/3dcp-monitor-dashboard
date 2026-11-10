@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+venv/
+.venv/
+
+# Site configuration: equipment addresses and any credentials
+.env
+.env.*
+!.env.example
+
+# Data is published separately; dataset/ and site/ are what fetch_dataset.py
+# and dashboard/export_static.py write
+data/
+dataset/
+site/
+lake/
+*.parquet.tmp
+*.duckdb
+analysis/figures/

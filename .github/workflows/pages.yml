@@ -1,0 +1,60 @@
+name: pages
+
+# Builds the dashboard as a static site from the published dataset and deploys it
+# to GitHub Pages. It runs only once the repository variable ZENODO_RECORD holds
+# the dataset's Zenodo record id or DOI (Settings -> Secrets and variables ->
+# Actions -> Variables), and Pages is set to deploy from GitHub Actions. The
+# optional variable PAGES_DOMAIN (for example dashboard.example.org) writes the
+# CNAME file for a custom domain; the domain itself is set under Settings -> Pages.
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: ${{ vars.ZENODO_RECORD != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Dataset from Zenodo, md5 checked
+        run: python fetch_dataset.py "${{ vars.ZENODO_RECORD }}" dataset
+      - name: Export the site
+        env:
+          PRINT_DATA: ${{ github.workspace }}/dataset
+          MPLBACKEND: Agg
+        run: python -m dashboard.export_static --out site
+      - name: Custom domain
+        if: ${{ vars.PAGES_DOMAIN != '' }}
+        run: echo "${{ vars.PAGES_DOMAIN }}" > site/CNAME
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
