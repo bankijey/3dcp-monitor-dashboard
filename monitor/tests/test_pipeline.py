@@ -80,7 +80,8 @@ def test_recorder_writes_complete_queryable_parquet(synthetic_run, tmp_path):
     scan = ds.dataset(lake / "bronze" / "scan", format="parquet", partitioning="hive").to_table()
     assert proc.num_rows == 100 and scan.num_rows == 80
     assert set(proc.column("origin").to_pylist()) == {"replay"}
-    row = scan.slice(0, 1).to_pylist()[0]
+    # only the profile columns: a nanosecond timestamp needs pandas to become a Python value
+    row = scan.select(["x", "m0", "width"]).slice(0, 1).to_pylist()[0]
     assert len(row["x"]) == 320 and len(row["m0"]) == 320 and row["width"] == pytest.approx(34.0)
 
     duckdb = pytest.importorskip("duckdb")
