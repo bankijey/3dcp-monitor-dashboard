@@ -85,8 +85,10 @@ def test_recorder_writes_complete_queryable_parquet(synthetic_run, tmp_path):
     assert len(row["x"]) == 320 and len(row["m0"]) == 320 and row["width"] == pytest.approx(34.0)
 
     duckdb = pytest.importorskip("duckdb")
+    # DuckDB 2 reads nanosecond timestamps as TIMESTAMPTZ_NS, which epoch() does not take,
+    # and its query results have no fetchone()
     n, span = duckdb.sql(
-        "SELECT count(*), epoch(max(t)) - epoch(min(t)) FROM read_parquet('{}', "
-        "hive_partitioning = true)".format(
-            (lake / "bronze" / "process" / "**" / "*.parquet").as_posix())).fetchone()
+        "SELECT count(*), epoch(max(t)::TIMESTAMPTZ) - epoch(min(t)::TIMESTAMPTZ) "
+        "FROM read_parquet('{}', hive_partitioning = true)".format(
+            (lake / "bronze" / "process" / "**" / "*.parquet").as_posix())).fetchall()[0]
     assert n == 100 and span == pytest.approx(1.98, abs=0.01)

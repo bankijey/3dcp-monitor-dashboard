@@ -32,6 +32,12 @@ def _glob(root, stream):
     return (Path(root) / "bronze" / stream / "**" / "*.parquet").as_posix()
 
 
+# DuckDB 2 reads the recorder's nanosecond timestamps as TIMESTAMPTZ_NS, which epoch() and
+# ::TIMESTAMP do not take. Microseconds are plenty for a summary, so t is read as TIMESTAMPTZ.
+SOURCE = ("(SELECT * REPLACE (t::TIMESTAMPTZ AS t) "
+          "FROM read_parquet('{}', hive_partitioning = true))")
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="printmon lake", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -56,7 +62,7 @@ def main(argv=None):
                    -- acquisition-to-storage latency; meaningless for replays (old data, new clock)
                    round(median(epoch_ns(recv_t) - epoch_ns(t))
                          FILTER (WHERE origin = 'live') / 1e6, 2)       AS median_lag_ms
-            FROM read_parquet('{glob}', hive_partitioning = true)
+            FROM {source}
             {where}
             GROUP BY ALL ORDER BY first_utc, src
         """,
@@ -69,7 +75,7 @@ def main(argv=None):
                    coalesce(sum(dropped), 0)                            AS dropped,
                    round(avg(width), 2)                                 AS mean_width_mm,
                    round(sum(len(x)) / count(*), 0)                     AS pts_per_profile
-            FROM read_parquet('{glob}', hive_partitioning = true)
+            FROM {source}
             {where}
             GROUP BY ALL ORDER BY first_utc
         """,
@@ -82,7 +88,7 @@ def main(argv=None):
         found = True
         size = sum(f.stat().st_size for f in files) / 1e6
         print("\n== {}  ({} files, {:.1f} MB)".format(stream, len(files), size))
-        _print_table(con.sql(sql.format(glob=_glob(root, stream), where=where)))
+        _print_table(con.sql(sql.format(source=SOURCE.format(_glob(root, stream)), where=where)))
     if not found:
         print("nothing recorded yet under {}".format(root / "bronze"))
     return 0
