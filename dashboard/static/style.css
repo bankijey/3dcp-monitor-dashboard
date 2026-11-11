@@ -255,6 +255,7 @@ table.data th:first-child, table.data td:first-child { text-align: left; }
 .foot { flex: none; padding: 7px var(--gap); border-top: 1px solid var(--line); background: var(--surface); color: var(--ink-3); font-size: 12.5px; }
 .foot-row { display: flex; flex-wrap: wrap; gap: 4px 22px; align-items: baseline; }
 .foot summary { cursor: pointer; color: var(--ink-2); }
+.foot-credit { color: var(--ink-2); }
 .foot details[open] summary { margin-bottom: 4px; }
 .foot-notes { display: grid; gap: 4px; max-width: 110ch; }
 .foot details { flex: 1 1 100%; }

@@ -2,6 +2,9 @@
 
 Software for recording, monitoring and replaying 3D concrete printing runs.
 
+The dashboard is live at https://3dcp.jeyifous.com/, built from the published
+dataset ([doi:10.5281/zenodo.24117435](https://doi.org/10.5281/zenodo.24117435)).
+
 | Folder | What it does |
 |---|---|
 | `monitor/` | printmon: acquisition fan-out, live viewer, lossless recorder and storage for the printer's pump, gantry and laser profile scanner. See [monitor/README.md](monitor/README.md). |
@@ -11,10 +14,10 @@ Software for recording, monitoring and replaying 3D concrete printing runs.
 
 ## Dashboard
 
-Install, from the repository root:
+Install, from the repository root (Python 3.11 or newer):
 
 ```powershell
-py -3.11 -m venv venv
+py -3 -m venv venv
 venv\Scripts\pip install -r requirements.txt
 ```
 
@@ -35,10 +38,12 @@ venv\Scripts\python -m uvicorn dashboard.server:app
 
 Open the address uvicorn prints.
 
-The charts show what was measured, not interpolated: a bead width where both edges
-of the bead were found on a laser profile, as boxes over 15 s of profiles. Only the
-colour of the 3D bead between scan sections is interpolated, and the page says so.
-The Print tab draws no conclusions.
+The width boxes show only what was measured: a bead width where both edges of the
+bead were found on a laser profile, as boxes over 15 s of profiles. Pressure and feed
+are 1 s means of the logged values, and torque is a 30 s mean that bridges gaps of up
+to 30 s. The colour of the 3D bead between scan sections is interpolated, and the
+water-to-solids ratio is an estimate (see below); the page says both. The Print tab
+draws no conclusions.
 
 ### Static site
 
@@ -69,14 +74,15 @@ takes precedence. Every key is optional:
  "title": "3DCP print dashboard",
  "doi": "10.5281/zenodo.0000000", "code_doi": "10.5281/zenodo.0000001",
  "prints": {"<experiment id>": {"title": "Arch, May 2025", "mortar": "A"}},
+ "credit": "Experiments run at ...",
  "notes": ["..."]}
 ```
 
 `board` and `arch` name the step test and the arch printed after it, for the
 Valve step test tab; without them that tab is off. `default` is the print the
 page opens on. `prints` gives each print a
-display name and a mortar id. `doi`, `code_doi` and `notes` fill the footer;
-without `notes` the page shows its own method notes.
+display name and a mortar id. `credit`, `doi`, `code_doi` and `notes` fill the
+footer; without `notes` the page shows its own method notes.
 
 ## Water-to-solids ratio (W/S)
 
@@ -102,5 +108,5 @@ The width control results are from doi:10.58286/31704.
 
 ## Licence
 
-The code is under the licence in [LICENSE](LICENSE). The dataset has its own
-licence, stated on its Zenodo record.
+The code is under the Apache License 2.0: see [LICENSE](LICENSE) and
+[NOTICE](NOTICE). The dataset is under CC BY 4.0, as stated on its Zenodo record.

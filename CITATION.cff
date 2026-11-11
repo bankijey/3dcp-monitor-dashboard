@@ -3,7 +3,7 @@ message: "If you use this software, please cite it as below."
 type: software
 title: "3DCP print monitor and dashboard"
 version: 1.0.0
-license: MIT
+license: Apache-2.0
 authors:
   - family-names: "Jeyifous"
     given-names: "Olubunmi Anthony"

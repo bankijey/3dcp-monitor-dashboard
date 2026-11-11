@@ -4,6 +4,7 @@
   "arch": "print4",
   "default": "print6",
   "doi": "10.5281/zenodo.24117435",
+  "credit": "Experiments run at the Bundesanstalt für Materialforschung und -prüfung (BAM), Division 7.4",
   "prints": {
     "print1": {"title": "Wall, December 2023", "mortar": "A"},
     "print2": {"title": "Board, December 2024", "mortar": "A"},

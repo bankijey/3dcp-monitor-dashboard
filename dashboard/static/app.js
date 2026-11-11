@@ -47,10 +47,12 @@ function footer(site) {
   const doi = (label, v) => (v ? el('span', {}, `${label} `,
     el('a', { href: `https://doi.org/${v}`, target: '_blank', rel: 'noopener' }, `doi:${v}`)) : null);
   const notes = site.notes ?? [];
-  foot.replaceChildren(el('div', { class: 'foot-row' }, doi('Data', site.data_doi), doi('Code', site.code_doi),
+  foot.replaceChildren(el('div', { class: 'foot-row' },
+    site.credit ? el('span', { class: 'foot-credit' }, site.credit) : null,
+    doi('Data', site.data_doi), doi('Code', site.code_doi),
     notes.length ? el('details', {}, el('summary', {}, 'How the numbers are made'),
       el('div', { class: 'foot-notes' }, ...notes.map((n) => el('p', {}, n)))) : null));
-  foot.hidden = !site.data_doi && !site.code_doi && !notes.length;
+  foot.hidden = !site.credit && !site.data_doi && !site.code_doi && !notes.length;
 }
 
 async function start() {

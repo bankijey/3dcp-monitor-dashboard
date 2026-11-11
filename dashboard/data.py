@@ -66,9 +66,12 @@ NOTES = [
     "Width: the bead on each laser profile, between the two edges found 4 mm below its top, "
     "one value per profile when both edges are seen. A box holds the middle half of the "
     f"profiles in {WIDTH_BIN_S} s, the whiskers reach {WHISKER_REACH:g} box heights beyond it.",
-    "Nothing in the charts is interpolated; the colour of the 3D bead between scan sections is.",
-    "W/S: water metered per dose over the dry mortar fed while the mixer ran, kg per kg, shown "
-    "as logged. It is displayed only; any interpretation is up to the reader.",
+    "Pressure and feed are 1 s means of the logged values; torque is a 30 s mean that bridges "
+    "gaps of up to 30 s. The colour of the 3D bead between scan sections is interpolated.",
+    "W/S is an estimate, not a measurement: each dot is the water metered for one dose over the "
+    "dry mortar fed while the mixer ran, at a constant solids rate, in kg per kg; the line "
+    "follows both feeds through a stirred-tank model of the mixing chamber, as a 30 s mean. "
+    "It is displayed only; any interpretation is up to the reader.",
 ]
 
 
@@ -263,7 +266,8 @@ def site() -> dict:
     """What every page shows: title, the two DOIs, the method notes, the prints'
     names and whether the Width control page has its data."""
     return {"title": _PUB.get("title", "3DCP print dashboard"), "data_doi": _PUB.get("doi"),
-            "code_doi": _PUB.get("code_doi"), "notes": _PUB.get("notes", NOTES),
+            "code_doi": _PUB.get("code_doi"), "credit": _PUB.get("credit"),
+            "notes": _PUB.get("notes", NOTES),
             "prints": _PUB.get("prints", {}), "default_print": _PUB.get("default"),
             "width_control": has_step_test()}
 
