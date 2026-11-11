@@ -1,5 +1,7 @@
 # 3DCP print monitor and dashboard
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24128404.svg)](https://doi.org/10.5281/zenodo.24128404)
+
 Software for recording, monitoring and replaying 3D concrete printing runs.
 
 The dashboard is live at https://3dcp.jeyifous.com/, built from the published
@@ -103,7 +105,9 @@ venv\Scripts\python analysis\replay_video.py <experiment id> --seconds 40
 
 ## Citing
 
-See [CITATION.cff](CITATION.cff). Dataset: [doi:10.5281/zenodo.24117435](https://doi.org/10.5281/zenodo.24117435).
+See [CITATION.cff](CITATION.cff). Code, all versions:
+[doi:10.5281/zenodo.24128404](https://doi.org/10.5281/zenodo.24128404). Dataset:
+[doi:10.5281/zenodo.24117435](https://doi.org/10.5281/zenodo.24117435).
 The width control results are from doi:10.58286/31704.
 
 ## Licence

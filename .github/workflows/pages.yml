@@ -6,11 +6,11 @@ name: pages
 # Actions -> Variables), and Pages is set to deploy from GitHub Actions. The
 # optional variable PAGES_DOMAIN (for example dashboard.example.org) writes the
 # CNAME file for a custom domain; the domain itself is set under Settings -> Pages.
+# Not on releases: a release builds from its tag, and the github-pages environment
+# deploys from main only. Every release is a commit on main, which already builds.
 on:
   push:
     branches: [main]
-  release:
-    types: [published]
   workflow_dispatch:
 
 permissions:
