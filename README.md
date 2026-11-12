@@ -4,8 +4,9 @@
 
 Software for recording, monitoring and replaying 3D concrete printing runs.
 
-The dashboard is live at https://3dcp.jeyifous.com/, built from the published
-dataset ([doi:10.5281/zenodo.24117435](https://doi.org/10.5281/zenodo.24117435)).
+The print replay dashboard, built from the published dataset
+([doi:10.5281/zenodo.24117435](https://doi.org/10.5281/zenodo.24117435)), is at
+https://3dcp.jeyifous.com/.
 
 | Folder | What it does |
 |---|---|
